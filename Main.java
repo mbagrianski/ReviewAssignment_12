@@ -2,17 +2,15 @@
 Misha Bagrianski - ICS4U1 - 9/28/2019
 Instructor: Mr. Radulovich
 Review Assignment
-
+Draws one of the following with spinning lines: A function f(x) or a relation of points,
+created by tracing a cursor on the application opened through running the Draw.java class.
 
  */
 
 
 package sample;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.util.ArrayList;
-
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -33,19 +31,31 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        ArrayList<Double>linesX = new ArrayList<Double>();
-        ArrayList<Double>linesY = new ArrayList<Double>();
+        ArrayList<Double>linesX = new ArrayList<Double>(); //initializes arrayList of cfx values
+        ArrayList<Double>linesY = new ArrayList<Double>(); //initializes arrayList of cfy values
+
+        //initializes arrayList of points of any function that may have been drawn with Draw.java
         ArrayList<Double> drawnF = Methods.loadFunction(System.getProperty("user.dir") + "/src/function.txt");
+        //initializes arrayList of points traced by spinning lines
         ArrayList<Double> drawnPoints = new ArrayList<Double>();
 
-        int in = -100; //initial
-        int fi = 100;
-
-        double deltaT;
+        int in; //initialize inITIAL and fiNAL frequency values
+        int fi;
+        double deltaT; //initialize deltaT
+        /*
+        int in = -300; //comment in this block to manually specify a range of frequencies
+        int fi = 300; //otherwise it is done automatically to optimize the approximation
+        */
 
         if(functionType){
-            deltaT = 1.0 / (drawnF.size() / 2.0);
+            in = -drawnF.size() / 4;
+            fi = drawnF.size() / 4;
+
+            deltaT = 1 / (drawnF.size() / 2.0);
         }else{
+            in = -300;
+            fi = 300;
+
             deltaT = 1.0/600;
         }
 
@@ -89,10 +99,11 @@ public class Main extends Application {
 
         primaryStage.setScene(new Scene(Axis, length, width));
 
-        Line Xaxis = new Line(0, width /2, length, width /2); //create x axis
-        Line Yaxis = new Line(length /2, 0, length /2, width); //create y axis
+        Line Xaxis = new Line(0, width / 2.0, length, width / 2.0); //create x axis
+        Line Yaxis = new Line(length / 2.0, 0, length / 2.0, width); //create y axis
 
         AnimationTimer timer = new AnimationTimer() {
+
             private long lastUpdate;
 
             @Override
@@ -105,6 +116,7 @@ public class Main extends Application {
 
             @Override
             public void handle(long now) {
+
                 long elapsedNanoSeconds = now - lastUpdate;
                 double elapsedSeconds = elapsedNanoSeconds / 1_000_000_000.0;
 
@@ -167,6 +179,7 @@ public class Main extends Application {
 
                 }
                 t += elapsedSeconds*0.1;
+
                 if(t > 1){
                     this.stop();
                 }
