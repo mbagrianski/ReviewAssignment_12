@@ -9,17 +9,17 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
 public class Methods {
-    public double sin(double a, double f, double t) { //sin function
+    public double sin(double a, double f, double t) { //sin function (first part of assignment)
         double x = a*Math.sin(Math.toRadians(t *(360*f)/(2*Math.PI)));
         return x;
     }
 
-    public double cos(double a, double f, double t) { //cos function
+    public double cos(double a, double f, double t) { //cos function (first part of assignment)
         double x = a*Math.cos(Math.toRadians(t*(360*f)/(2*Math.PI)));
         return x;
     }
 
-    public static ArrayList<Double> loadFunction() {
+    public static ArrayList<Double> loadFunction() { //load the function from a hardcoded function, f(x)
         ArrayList<Double> coordinates = new ArrayList<Double>();
         for (int i = 0; i < 600; i++) {
             coordinates.add(i, f(i));
@@ -27,7 +27,7 @@ public class Methods {
         return coordinates;
     }
 
-    public static ArrayList<Double> loadFunction(String file) throws IOException {
+    public static ArrayList<Double> loadFunction(String file) throws IOException { //load the function from a file
         RandomAccessFile raf = new RandomAccessFile(file, "r");
         ArrayList<Double> coordinates = new ArrayList<Double>();
         raf.seek(0);
@@ -57,8 +57,9 @@ public class Methods {
 
 
     public static double f(double x) {
-        x -=300;
-        double y = 100*Math.sin(0.025*x); //hardcoded function
-        return -y;
+            x -= 300;
+            double y = 100*Math.sin(0.025*x); //hardcoded function
+                return -y;
+
     }
 }
